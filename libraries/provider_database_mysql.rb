@@ -61,15 +61,13 @@ class Chef
         end
 
         def action_query
-          if exists?
-            begin
-              db.select_db(@new_resource.database_name) if @new_resource.database_name
-              Chef::Log.debug("#{@new_resource}: Performing query [#{new_resource.sql_query}]")
-              db.query(@new_resource.sql_query)
-              @new_resource.updated_by_last_action(true)
-            ensure
-              close
-            end
+          begin
+            db.select_db(@new_resource.database_name) if @new_resource.database_name
+            Chef::Log.debug("#{@new_resource}: Performing query [#{new_resource.sql_query}]")
+            db.query(@new_resource.sql_query)
+            @new_resource.updated_by_last_action(true)
+          ensure
+            close
           end
         end
 
